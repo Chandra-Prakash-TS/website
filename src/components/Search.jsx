@@ -126,7 +126,6 @@ function HighlightQuery({ text, query }) {
 }
 
 function SearchResult({ result, autocomplete, collection, query }) {
-  let id = useId()
   console.log('result', result.url)
   let sectionTitle = navigation.find((section) =>
     section.links.find((link) => link.href === result?.url.split('#')[0]),
@@ -134,6 +133,7 @@ function SearchResult({ result, autocomplete, collection, query }) {
   let hierarchy = [sectionTitle, result.pageTitle].filter(
     (x) => typeof x === 'string',
   )
+  const id = useId()
 
   return (
     <li
@@ -157,20 +157,23 @@ function SearchResult({ result, autocomplete, collection, query }) {
           aria-hidden="true"
           className="mt-0.5 truncate whitespace-nowrap text-xs text-slate-500 dark:text-slate-400"
         >
-          {hierarchy.map((item, itemIndex, items) => (
-            <Fragment key={itemIndex}>
-              <HighlightQuery text={item} query={query} />
-              <span
-                className={
-                  itemIndex === items.length - 1
-                    ? 'sr-only'
-                    : 'mx-2 text-slate-300 dark:text-slate-700'
-                }
-              >
-                /
-              </span>
-            </Fragment>
-          ))}
+          {console.log('hierarchy', hierarchy)}
+          {hierarchy
+            .filter((item) => item && item.trim().toLowerCase() !== 'untitled')
+            .map((item, itemIndex, items) => (
+              <Fragment key={itemIndex}>
+                <HighlightQuery text={item} query={query} />
+                <span
+                  className={
+                    itemIndex === items.length - 1
+                      ? 'sr-only'
+                      : 'mx-2 text-slate-300 dark:text-slate-700'
+                  }
+                >
+                  /
+                </span>
+              </Fragment>
+            ))}
         </div>
       )}
     </li>
@@ -196,12 +199,38 @@ function SearchResults({ autocomplete, query, collection }) {
       </p>
     )
   }
+  let filtered = collection.items[0].items.filter(
+    (item) =>
+      item.title &&
+      item.title.trim() !== '' &&
+      item.title.trim().toLowerCase() !== 'untitled',
+  )
 
+  // 2. Boost section headings that directly match the query
+  const lowerQuery = query.toLowerCase()
+  let sectionMatches = filtered.filter((item) =>
+    item.title.toLowerCase().includes(lowerQuery),
+  )
 
+  // 3. If not found, filter for those whose content includes the query
+  if (sectionMatches.length === 0) {
+    sectionMatches = filtered.filter(
+      (item) => item.content && item.content.toLowerCase().includes(lowerQuery),
+    )
+  }
+
+  // 4. As fallback, use all filtered items sorted by score
+  if (sectionMatches.length === 0) {
+    sectionMatches = [...filtered].sort(
+      (a, b) => (b.score || 0) - (a.score || 0),
+    )
+  }
+
+  console.log('Filtered results:', sectionMatches)
   return (
     <ul {...autocomplete.getListProps()}>
       {console.log('collection', collection)}
-      {collection.items[0].items.map((result) => (
+      {sectionMatches.slice(0, 1).map((result) => (
         <SearchResult
           key={result.url}
           result={result}
