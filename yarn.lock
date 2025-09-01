@@ -1895,10 +1895,10 @@ flatted@^3.2.7:
   resolved "https://registry.npmjs.org/flatted/-/flatted-3.3.1.tgz"
   integrity sha512-X8cqMLLie7KsNUDSdzeN8FYK9rEt4Dt67OsG/DNGnYTSDBG4uFAJFBnUeiV+zCVAvwFy56IjM9sH51jVaEhNxw==
 
-flexsearch@^0.7.31:
-  version "0.7.31"
-  resolved "https://registry.npmjs.org/flexsearch/-/flexsearch-0.7.31.tgz"
-  integrity sha512-XGozTsMPYkm+6b5QL3Z9wQcJjNYxp0CYn3U1gO7dwD6PAqU1SVWZxI9CCg3z+ml3YfqdPnrBehaBrnH2AGKbNA==
+flexsearch@^0.7.43:
+  version "0.7.43"
+  resolved "https://registry.npmjs.org/flexsearch/-/flexsearch-0.7.43.tgz"
+  integrity sha512-c5o/+Um8aqCSOXGcZoqZOm+NqtVwNsvVpWv6lfmSclU954O3wvQKxxK8zj74fPaSJbXpSLTs4PRhh+wnoCXnKg==
 
 for-each@^0.3.3:
   version "0.3.3"
@@ -2568,6 +2568,11 @@ loose-envify@^1.1.0, loose-envify@^1.4.0:
   integrity sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==
   dependencies:
     js-tokens "^3.0.0 || ^4.0.0"
+
+luxon@^3.7.1:
+  version "3.7.1"
+  resolved "https://registry.npmjs.org/luxon/-/luxon-3.7.1.tgz"
+  integrity sha512-RkRWjA926cTvz5rAb1BqyWkKbbjzCGchDUIKMCUvNi17j6f6j8uHGDV82Aqcqtzd+icoYpELmG3ksgGiFNNcNg==
 
 memoize-one@^4.0.0:
   version "4.1.0"

@@ -71,8 +71,9 @@ function useAutocomplete({ close }) {
                 return search(query, { limit: 5 })
               },
               getItemUrl({ item }) {
-                return item.url
+                return item?.url || ''
               },
+
               onSelect: navigate,
             },
           ]
@@ -126,9 +127,9 @@ function HighlightQuery({ text, query }) {
 
 function SearchResult({ result, autocomplete, collection, query }) {
   let id = useId()
-
+  console.log('result', result.url)
   let sectionTitle = navigation.find((section) =>
-    section.links.find((link) => link.href === result.url.split('#')[0]),
+    section.links.find((link) => link.href === result?.url.split('#')[0]),
   )?.title
   let hierarchy = [sectionTitle, result.pageTitle].filter(
     (x) => typeof x === 'string',
@@ -196,9 +197,11 @@ function SearchResults({ autocomplete, query, collection }) {
     )
   }
 
+
   return (
     <ul {...autocomplete.getListProps()}>
-      {collection.items.map((result) => (
+      {console.log('collection', collection)}
+      {collection.items[0].items.map((result) => (
         <SearchResult
           key={result.url}
           result={result}

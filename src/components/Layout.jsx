@@ -87,8 +87,9 @@ function Header() {
         </div>
       )}
       {isEvents && (
-        <div className="relative flex hidden flex-grow basis-0 items-center justify-center sm:block">
-          <h1 className="items-center justify-center text-center text-xl font-bold text-white sm:text-3xl md:text-4xl">
+        <div className=" absolute flex items-center xs:left-40 sm:left-40 md:left-44 lg:left-32">
+          <div className="mr-2 h-8 w-1 bg-sky-400"></div>
+          <h1 className="text-left text-lg font-semibold text-white sm:text-xl md:text-3xl">
             Events
           </h1>
         </div>
